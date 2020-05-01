@@ -12,55 +12,198 @@ export const theme = vsDark;
 ## Comparing modern JavaScript frameworks
 ## 🚀👩‍🚀 Discovery Day v3 👨‍🚀🚀
 
+---
+
+# DOM
+
+## Document Object Model
+
+### A 🌳 of everything that you experience in a web application
+---
+
+# State management
+
+## Managing the state of user interface elements
+
+#### When you update an avatar with your on point headshot ✨, state changes.
+#### This update needs to happen in the UI (default photo to new photo).
+---
+
+# React
+
+- Virtual DOM (framework reconciles old vs. new)
+
+- Optimize by opting out of updates
+
+- Supports accessibility through existing web standards
 
 ---
 
+# Svelte
 
+- No virtual DOM
+
+- Fast because it directly manipulates the DOM
+
+- Built in warnings if you write inaccessible code
+
+---
+
+# Create button and click handler
+# 🖱️=> 💥
+
+---
 
 <CodeSurferColumns themes={[vsDark, nightOwl]}>
 
 <Step>
 
-```js
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0); // Test 1
+```js title="React"
+import React, { useState } from "react"
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  const handleClick = () => {
+    setCount(count + 1)
+  }
+
+  return <button onClick={handleClick}>
+	          Clicked {count} {count === 1 ? 'time' : 'times'}
+         </button>
+}
+
+export default Counter;
 ```
 
-```js
-const minim = (ad, enim) => dolore.magna(ad / enim); // Test 2
+```js title="Svelte"
+<script>
+	let count = 0;
+
+	function handleClick() {
+		count += 1;
+	}
+</script>
+
+<button on:click={handleClick}>
+	Clicked {count} {count === 1 ? 'time' : 'times'}
+</button>
 ```
 
 </Step>
 
 <Step>
 
-```js 1:1 title="State management in React"
-const [num, setNum] = useState(0)
-const lorem = (ipsum, dolor, sit) => {
-  const amet = dolor - ipsum;
-  return consectetur.adipiscing(
-    {
-      elit: sed.eiusmod(sit - dolor) / amet + 2,
-    },
-    (tempor, incididunt) => ipsum + amet * incididunt
-  );
-};
+```js 4:6 title="Declare state the React way"
+import React, { useState } from "react"
 
-const magna = aliqua => aliqua.ut((enim, ad) => enim, 0);
+const Counter = () => {
+  // React hook that tells React that the UI depends on count
+  // Declare a state variable (count) and an update function (setCount) and initial value
+  const [count, setCount] = useState(0);
+
+  const handleClick = () => {
+    setCount(count + 1)
+  }
+
+  return <button onClick={handleClick}>
+	          Clicked {count} {count === 1 ? 'time' : 'times'}
+         </button>
+}
+
+export default Counter;
 ```
 
-```js 1:1 title="State management in Svelte"
-svelte way of doing things
-const minim = (ad, enim) => dolore.magna(ad / enim);
+```js 2:4 title="Declare state the Svelte way"
+<script>
+    // Declare a variable and assign an initial value
+    // Re-assign to update state
+	let count = 0;
 
-const sed = (eiusmod, tempor, incididunt) => {
-  const ut = tempor - eiusmod;
-  return labore.et(
-    {
-      amet: dolore.magna(incididunt - tempor) / ut + 2,
-    },
-    (aliqua, elit) => eiusmod + ut * elit
-  );
-};
+	function handleClick() {
+		count += 1;
+	}
+</script>
+
+<button on:click={handleClick}>
+	Clicked {count} {count === 1 ? 'time' : 'times'}
+</button>
+```
+
+</Step>
+
+<Step>
+
+```js 6:8 title="Handle click the React way"
+import React, { useState } from "react"
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  const handleClick = () => {
+    // Call setCount() to update state with incremented value
+    setCount(count + 1)
+  }
+
+  return <button onClick={handleClick}>
+	          Clicked {count} {count === 1 ? 'time' : 'times'}
+         </button>
+}
+
+export default Counter;
+```
+
+```js 4:7 title="Handle click event the Svelte way"
+<script>
+	let count = 0;
+
+	function handleClick() {
+        // Increment count and re-assign value
+		count += 1;
+	}
+</script>
+
+<button on:click={handleClick}>
+	Clicked {count} {count === 1 ? 'time' : 'times'}
+</button>
+```
+
+</Step>
+
+<Step>
+
+```js 10:13 title="Display a button the React way"
+import React, { useState } from "react"
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  const handleClick = () => {
+    setCount(count + 1)
+  }
+
+  // Use JSX (extension of JavaScript) for attributes
+  return <button className="cool-button" onClick={handleClick}>
+	          Clicked {count} {count === 1 ? 'time' : 'times'}
+         </button>
+}
+
+export default Counter;
+```
+
+```js 9:11 title="Display a button the Svelte way"
+<script>
+	let count = 0;
+
+	function handleClick() {
+		count += 1;
+	}
+</script>
+
+// Use plain old HTML attributes and Svelte directives
+<button class="cool-button" on:click={handleClick}>
+	Clicked {count} {count === 1 ? 'time' : 'times'}
+</button>
 ```
 
 </Step>
@@ -69,5 +212,21 @@ const sed = (eiusmod, tempor, incididunt) => {
 
 ---
 
-docs:  
-[codesurfer.pomb.us](https://codesurfer.pomb.us)
+# Pros
+
+---
+
+# Cons
+
+---
+
+# Demo of Svelte app
+## Using Vision Zero Database developed for the Vision Zero Team
+
+### ⚒️ Tools 🛠️
+* Bootstrap to quickly build UI
+  * Sveltestrap https://github.com/bestguy/sveltestrap
+
+* Apollo to connect to Hasura (database layer that will provide data via GraphQL API)
+  * svelte-apollo https://github.com/timhall/svelte-apollo
+
