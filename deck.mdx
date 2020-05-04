@@ -10,6 +10,7 @@ export const theme = vsDark;
 # React vs. Svelte
 
 ## Mission: Compare modern JavaScript frameworks
+### (What we use vs. What we could use)
 ## 🚀👩‍🚀 Discovery Day v3 👨‍🚀🚀
 
 ---
@@ -59,9 +60,7 @@ export const theme = vsDark;
 
 - No virtual DOM
 
-- Fast because it directly manipulates the DOM
-
-- Ex. 🍔🍟
+- Fast because it directly manipulates the DOM, ex. 🍔🍟 
 
 - Built in warnings that guide you in building accessible apps
 
@@ -230,76 +229,7 @@ export default Counter;
 
 <Step>
 
-```js title="Asynchronous fetch the React way"
-// Seems simpler at first
-const { loading, error, data } = useQuery(crashQuery)
-
-return <div>
-          {loading && <Spinner />}
-          {!!data.atd_txdot_crashes && 
-          data.atd_txdot_crashes.map((crash) => <div>{crash.crash_id}</div>)}
-          {error && <div>Error: {error}</div>}
-       </div>   
-```
-
-```js title="Asynchronous fetch the Svelte way"
-// Seems more complex at first
-<script>
-	const crashes = query(client, { query: crashQuery });
-</script>
-
-<!-- Await block -->
-  {#await $crashes}
-    <Spinner />
-  {:then result}
-    {#each result.data.atd_txdot_crashes as crash}
-      <div>{crash.crash_id}
-    {/each}
-  {:catch error}
-    Error: {error}
-  {/await}
-```
-
-</Step>
-
-<Step>
-
-```js 1:2 title="Handling the response the React way"
-// Apollo handles loading and error states and data fetch from Vision Zero database
-const { loading, error, data } = useQuery(crashQuery)
-
-return <div>
-          // Response handling is elsewhere
-          {loading && <Spinner />}
-          {!!data.atd_txdot_crashes && 
-          data.atd_txdot_crashes.map((crash) => <div>{crash.crash_id}</div>)}
-          {error && <div>Error: {error}</div>}
-       </div>   
-```
-
-```js 2:3 title="Handling the response the Svelte way"
-<script>
-    // Apollo handles data fetch from from Vision Zero database
-	const crashes = query(client, { query: crashQuery });
-</script>
-
-<!-- Await block -->
-  {#await $crashes}
-    <Spinner />
-  {:then result}
-    {#each result.data.atd_txdot_crashes as crash}
-      <div>{crash.crash_id}
-    {/each}
-  {:catch error}
-    Error: {error}
-  {/await}
-```
-
-</Step>
-
-<Step>
-
-```js 4:9 title="Displaying the response the React way"
+```js 4:9 title="Asynchronous data fetch the React way"
 const { loading, error, data } = useQuery(crashQuery)
 
 return <div>
@@ -312,7 +242,7 @@ return <div>
        </div>   
 ```
 
-```js 5:16 title="Displaying the response the Svelte way"
+```js 5:16 title="Asynchronous data fetch the Svelte way"
 <script>
 	const crashes = query(client, { query: crashQuery });
 </script>
@@ -337,27 +267,21 @@ return <div>
 
 ---
 
-# Pros of Svelte
+# What I learned about Svelte
 - Fast development
-- More readable
-- Claims to render faster but I did not test
+- More readable code
 - Built-in cues for accessibility
 
 ---
 
-# Cons of Svelte
-- It is new so troubleshooting can be frustrating
+# Hard things about Svelte
+- It is pretty new so troubleshooting can be frustrating
 - Logical blocks and directives have a learning curve
+- React patterns like props and components can lead to a false sense of understanding
 
 ---
 
 # [Demo](http://localhost:5000/) of Svelte app
 ## Using Vision Zero Database developed for the Vision Zero Team (test environment)
 
-### ⚒️ Tools 🛠️
-* Bootstrap to quickly build UI
-  * Sveltestrap https://github.com/bestguy/sveltestrap
-
-* Apollo to connect to Hasura (database layer that will provide data via GraphQL API)
-  * svelte-apollo https://github.com/timhall/svelte-apollo
 
