@@ -9,14 +9,24 @@ export const theme = vsDark;
 
 # React vs. Svelte
 
-## Comparing modern JavaScript frameworks
+## Mission: Compare modern JavaScript frameworks
 ## 🚀👩‍🚀 Discovery Day v3 👨‍🚀🚀
+
+---
+
+# Frameworks
+
+## They help us focus on the important problems at hand
+
+## and avoid problems that have already been solved. ✅
 
 ---
 
 # DOM
 
 ## Document Object Model
+
+### Think of...
 
 ### A 🌳 of everything that you experience in a web application
 ---
@@ -25,30 +35,38 @@ export const theme = vsDark;
 
 ## Managing the state of user interface elements
 
-#### When you update an avatar with your on point headshot ✨, state changes.
-#### This update needs to happen in the UI (default photo to new photo).
+### Think of...
+#### When you update your avatar with your amazing new headshot ✨...
+#### State changes and the UI must reflect this update.
+#### Default photo 👉 Personalized photo
 ---
 
-# React
+# Strengths of React
 
-- Virtual DOM (framework reconciles old vs. new)
+- Component-based so code is reusable and logic is isolated to where it matters
 
-- Optimize by opting out of updates
+- Virtual DOM (framework reconciles old state vs. new state)
+
+- Optimized by opting out of these updates
 
 - Supports accessibility through existing web standards
 
 ---
 
-# Svelte
+# Strengths Svelte
+
+- Also component-based so we get the same advantages
 
 - No virtual DOM
 
 - Fast because it directly manipulates the DOM
 
-- Built in warnings if you write inaccessible code
+- Ex. 🍔🍟
+
+- Built in warnings that guide you in building accessible apps
 
 ---
-
+# Sample code:
 # Create button and click handler
 # 🖱️=> 💥
 
@@ -94,12 +112,11 @@ export default Counter;
 
 <Step>
 
-```js 4:6 title="Declare state the React way"
+```js 4:5 title="Declare state the React way"
 import React, { useState } from "react"
 
 const Counter = () => {
-  // React hook that tells React that the UI depends on count
-  // Declare a state variable (count) and an update function (setCount) and initial value
+  // Declare a state variable (count) and an update function (setCount) and set an initial value
   const [count, setCount] = useState(0);
 
   const handleClick = () => {
@@ -114,10 +131,11 @@ const Counter = () => {
 export default Counter;
 ```
 
-```js 2:4 title="Declare state the Svelte way"
+```js 2:5 title="Declare state the Svelte way"
 <script>
     // Declare a variable and assign an initial value
     // Re-assign to update state
+    // Less complex 👍
 	let count = 0;
 
 	function handleClick() {
@@ -134,7 +152,7 @@ export default Counter;
 
 <Step>
 
-```js 6:8 title="Handle click the React way"
+```js 6:9 title="Handle click the React way"
 import React, { useState } from "react"
 
 const Counter = () => {
@@ -153,12 +171,13 @@ const Counter = () => {
 export default Counter;
 ```
 
-```js 4:7 title="Handle click event the Svelte way"
+```js 4:8 title="Handle click event the Svelte way"
 <script>
 	let count = 0;
 
 	function handleClick() {
         // Increment count and re-assign value
+        // Less complex 👍
 		count += 1;
 	}
 </script>
@@ -201,9 +220,115 @@ export default Counter;
 </script>
 
 // Use plain old HTML attributes and Svelte directives
+// Similar complexity 😐
 <button class="cool-button" on:click={handleClick}>
 	Clicked {count} {count === 1 ? 'time' : 'times'}
 </button>
+```
+
+</Step>
+
+<Step>
+
+```js title="Asynchronous fetch the React way"
+// Seems simpler at first
+const { loading, error, data } = useQuery(crashQuery)
+
+return <div>
+          {loading && <Spinner />}
+          {!!data.atd_txdot_crashes && 
+          data.atd_txdot_crashes.map((crash) => <div>{crash.crash_id}</div>)}
+          {error && <div>Error: {error}</div>}
+       </div>   
+```
+
+```js title="Asynchronous fetch the Svelte way"
+// Seems more complex at first
+<script>
+	const crashes = query(client, { query: crashQuery });
+</script>
+
+<!-- Await block -->
+  {#await $crashes}
+    <Spinner />
+  {:then result}
+    {#each result.data.atd_txdot_crashes as crash}
+      <div>{crash.crash_id}
+    {/each}
+  {:catch error}
+    Error: {error}
+  {/await}
+```
+
+</Step>
+
+<Step>
+
+```js 1:2 title="Handling the response the React way"
+// Apollo handles loading and error states and data fetch from Vision Zero database
+const { loading, error, data } = useQuery(crashQuery)
+
+return <div>
+          // Response handling is elsewhere
+          {loading && <Spinner />}
+          {!!data.atd_txdot_crashes && 
+          data.atd_txdot_crashes.map((crash) => <div>{crash.crash_id}</div>)}
+          {error && <div>Error: {error}</div>}
+       </div>   
+```
+
+```js 2:3 title="Handling the response the Svelte way"
+<script>
+    // Apollo handles data fetch from from Vision Zero database
+	const crashes = query(client, { query: crashQuery });
+</script>
+
+<!-- Await block -->
+  {#await $crashes}
+    <Spinner />
+  {:then result}
+    {#each result.data.atd_txdot_crashes as crash}
+      <div>{crash.crash_id}
+    {/each}
+  {:catch error}
+    Error: {error}
+  {/await}
+```
+
+</Step>
+
+<Step>
+
+```js 4:9 title="Displaying the response the React way"
+const { loading, error, data } = useQuery(crashQuery)
+
+return <div>
+          // Render view conditionally
+          // Easy to get lost in the logical flow
+          {loading && <Spinner />}
+          {!!data.atd_txdot_crashes && 
+          data.atd_txdot_crashes.map((crash) => <div>{crash.crash_id}</div>)}
+          {error && <div>Error: {error}</div>}
+       </div>   
+```
+
+```js 5:16 title="Displaying the response the Svelte way"
+<script>
+	const crashes = query(client, { query: crashQuery });
+</script>
+
+<!-- Await block -->
+<!-- Mixes response handling with display logic 🙌 -->
+<!-- More readable line-by-line -->
+  {#await $crashes}
+    <Spinner />
+  {:then result}
+    {#each result.data.atd_txdot_crashes as crash}
+      <div>{crash.crash_id}
+    {/each}
+  {:catch error}
+    Error: {error}
+  {/await}
 ```
 
 </Step>
@@ -212,16 +337,22 @@ export default Counter;
 
 ---
 
-# Pros
+# Pros of Svelte
+- Fast development
+- More readable
+- Claims to render faster but I did not test
+- Built-in cues for accessibility
 
 ---
 
-# Cons
+# Cons of Svelte
+- It is new so troubleshooting can be frustrating
+- Logical blocks and directives have a learning curve
 
 ---
 
-# Demo of Svelte app
-## Using Vision Zero Database developed for the Vision Zero Team
+# [Demo](http://localhost:5000/) of Svelte app
+## Using Vision Zero Database developed for the Vision Zero Team (test environment)
 
 ### ⚒️ Tools 🛠️
 * Bootstrap to quickly build UI
