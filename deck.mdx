@@ -65,9 +65,7 @@ export const theme = vsDark;
 - Built in warnings that guide you in building accessible apps
 
 ---
-# Sample code:
-# Create button and click handler
-# 🖱️=> 💥
+# Some quick code samples
 
 ---
 
@@ -111,7 +109,7 @@ export default Counter;
 
 <Step>
 
-```js 4:5 title="Declare state the React way"
+```js 4:5 title="Handle state the React way"
 import React, { useState } from "react"
 
 const Counter = () => {
@@ -130,7 +128,7 @@ const Counter = () => {
 export default Counter;
 ```
 
-```js 2:5 title="Declare state the Svelte way"
+```js 2:5 title="Handle state the Svelte way"
 <script>
     // Declare a variable and assign an initial value
     // Re-assign to update state
@@ -143,84 +141,6 @@ export default Counter;
 </script>
 
 <button on:click={handleClick}>
-	Clicked {count} {count === 1 ? 'time' : 'times'}
-</button>
-```
-
-</Step>
-
-<Step>
-
-```js 6:9 title="Handle click the React way"
-import React, { useState } from "react"
-
-const Counter = () => {
-  const [count, setCount] = useState(0);
-
-  const handleClick = () => {
-    // Call setCount() to update state with incremented value
-    setCount(count + 1)
-  }
-
-  return <button onClick={handleClick}>
-	          Clicked {count} {count === 1 ? 'time' : 'times'}
-         </button>
-}
-
-export default Counter;
-```
-
-```js 4:8 title="Handle click event the Svelte way"
-<script>
-	let count = 0;
-
-	function handleClick() {
-        // Increment count and re-assign value
-        // Less complex 👍
-		count += 1;
-	}
-</script>
-
-<button on:click={handleClick}>
-	Clicked {count} {count === 1 ? 'time' : 'times'}
-</button>
-```
-
-</Step>
-
-<Step>
-
-```js 10:13 title="Display a button the React way"
-import React, { useState } from "react"
-
-const Counter = () => {
-  const [count, setCount] = useState(0);
-
-  const handleClick = () => {
-    setCount(count + 1)
-  }
-
-  // Use JSX (extension of JavaScript) for attributes
-  return <button className="cool-button" onClick={handleClick}>
-	          Clicked {count} {count === 1 ? 'time' : 'times'}
-         </button>
-}
-
-export default Counter;
-```
-
-```js 9:11 title="Display a button the Svelte way"
-<script>
-	let count = 0;
-
-	function handleClick() {
-		count += 1;
-	}
-</script>
-
-// Use plain old HTML attributes and Svelte directives
-// Similar complexity 😐
-<button class="cool-button" on:click={handleClick}>
 	Clicked {count} {count === 1 ? 'time' : 'times'}
 </button>
 ```
@@ -271,6 +191,7 @@ return <div>
 - Fast development
 - More readable code
 - Built-in cues for accessibility
+- Wanted to keep going but ran out of time (good sign)
 
 ---
 
