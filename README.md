@@ -1,3 +1,7 @@
+# React vs. Svelte
+
+This is a Code Surfer deck comparing React and Svelte JS frameworks.
+
 # MDX Deck + Code Surfer template
 
 This project was generated with the `npm init code-surfer-deck` command.
