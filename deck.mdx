@@ -10,7 +10,6 @@ export const theme = vsDark;
 # React vs. Svelte
 
 ## Mission: Compare modern JavaScript frameworks
-### (What we use vs. What we could use)
 ## 🚀👩‍🚀 Discovery Day v3 👨‍🚀🚀
 
 ---
@@ -60,12 +59,16 @@ export const theme = vsDark;
 
 - No virtual DOM
 
-- Fast because it directly manipulates the DOM, ex. 🍔🍟 
+- Fast because it directly manipulates the DOM
+
+- Ex. 🍔🍟
 
 - Built in warnings that guide you in building accessible apps
 
 ---
-# Some quick code samples
+# Sample code:
+# Create button and click handler
+# 🖱️=> 💥
 
 ---
 
@@ -109,7 +112,7 @@ export default Counter;
 
 <Step>
 
-```js 4:5 title="Handle state the React way"
+```js 4:5 title="Declare state the React way"
 import React, { useState } from "react"
 
 const Counter = () => {
@@ -128,7 +131,7 @@ const Counter = () => {
 export default Counter;
 ```
 
-```js 2:5 title="Handle state the Svelte way"
+```js 2:5 title="Declare state the Svelte way"
 <script>
     // Declare a variable and assign an initial value
     // Re-assign to update state
@@ -149,7 +152,154 @@ export default Counter;
 
 <Step>
 
-```js 4:9 title="Asynchronous data fetch the React way"
+```js 6:9 title="Handle click the React way"
+import React, { useState } from "react"
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  const handleClick = () => {
+    // Call setCount() to update state with incremented value
+    setCount(count + 1)
+  }
+
+  return <button onClick={handleClick}>
+	          Clicked {count} {count === 1 ? 'time' : 'times'}
+         </button>
+}
+
+export default Counter;
+```
+
+```js 4:8 title="Handle click event the Svelte way"
+<script>
+	let count = 0;
+
+	function handleClick() {
+        // Increment count and re-assign value
+        // Less complex 👍
+		count += 1;
+	}
+</script>
+
+<button on:click={handleClick}>
+	Clicked {count} {count === 1 ? 'time' : 'times'}
+</button>
+```
+
+</Step>
+
+<Step>
+
+```js 10:13 title="Display a button the React way"
+import React, { useState } from "react"
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  const handleClick = () => {
+    setCount(count + 1)
+  }
+
+  // Use JSX (extension of JavaScript) for attributes
+  return <button className="cool-button" onClick={handleClick}>
+	          Clicked {count} {count === 1 ? 'time' : 'times'}
+         </button>
+}
+
+export default Counter;
+```
+
+```js 9:11 title="Display a button the Svelte way"
+<script>
+	let count = 0;
+
+	function handleClick() {
+		count += 1;
+	}
+</script>
+
+// Use plain old HTML attributes and Svelte directives
+// Similar complexity 😐
+<button class="cool-button" on:click={handleClick}>
+	Clicked {count} {count === 1 ? 'time' : 'times'}
+</button>
+```
+
+</Step>
+
+<Step>
+
+```js title="Asynchronous fetch the React way"
+// Seems simpler at first
+const { loading, error, data } = useQuery(crashQuery)
+
+return <div>
+          {loading && <Spinner />}
+          {!!data.atd_txdot_crashes && 
+          data.atd_txdot_crashes.map((crash) => <div>{crash.crash_id}</div>)}
+          {error && <div>Error: {error}</div>}
+       </div>   
+```
+
+```js title="Asynchronous fetch the Svelte way"
+// Seems more complex at first
+<script>
+	const crashes = query(client, { query: crashQuery });
+</script>
+
+<!-- Await block -->
+  {#await $crashes}
+    <Spinner />
+  {:then result}
+    {#each result.data.atd_txdot_crashes as crash}
+      <div>{crash.crash_id}
+    {/each}
+  {:catch error}
+    Error: {error}
+  {/await}
+```
+
+</Step>
+
+<Step>
+
+```js 1:2 title="Handling the response the React way"
+// Apollo handles loading and error states and data fetch from Vision Zero database
+const { loading, error, data } = useQuery(crashQuery)
+
+return <div>
+          // Response handling is elsewhere
+          {loading && <Spinner />}
+          {!!data.atd_txdot_crashes && 
+          data.atd_txdot_crashes.map((crash) => <div>{crash.crash_id}</div>)}
+          {error && <div>Error: {error}</div>}
+       </div>   
+```
+
+```js 2:3 title="Handling the response the Svelte way"
+<script>
+    // Apollo handles data fetch from from Vision Zero database
+	const crashes = query(client, { query: crashQuery });
+</script>
+
+<!-- Await block -->
+  {#await $crashes}
+    <Spinner />
+  {:then result}
+    {#each result.data.atd_txdot_crashes as crash}
+      <div>{crash.crash_id}
+    {/each}
+  {:catch error}
+    Error: {error}
+  {/await}
+```
+
+</Step>
+
+<Step>
+
+```js 4:9 title="Displaying the response the React way"
 const { loading, error, data } = useQuery(crashQuery)
 
 return <div>
@@ -162,7 +312,7 @@ return <div>
        </div>   
 ```
 
-```js 5:16 title="Asynchronous data fetch the Svelte way"
+```js 5:16 title="Displaying the response the Svelte way"
 <script>
 	const crashes = query(client, { query: crashQuery });
 </script>
@@ -187,22 +337,27 @@ return <div>
 
 ---
 
-# What I learned about Svelte
+# Pros of Svelte
 - Fast development
-- More readable code
+- More readable
+- Claims to render faster but I did not test
 - Built-in cues for accessibility
-- Wanted to keep going but ran out of time (good sign)
 
 ---
 
-# Hard things about Svelte
-- It is pretty new so troubleshooting can be frustrating
+# Cons of Svelte
+- It is new so troubleshooting can be frustrating
 - Logical blocks and directives have a learning curve
-- React patterns like props and components can lead to a false sense of understanding
 
 ---
 
 # [Demo](http://localhost:5000/) of Svelte app
 ## Using Vision Zero Database developed for the Vision Zero Team (test environment)
 
+### ⚒️ Tools 🛠️
+* Bootstrap to quickly build UI
+  * Sveltestrap https://github.com/bestguy/sveltestrap
+
+* Apollo to connect to Hasura (database layer that will provide data via GraphQL API)
+  * svelte-apollo https://github.com/timhall/svelte-apollo
 
